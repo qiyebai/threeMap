@@ -1,0 +1,142 @@
+// 滚动条
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #bdbdbf;
+  border-radius: 4px;
+}
+
+html,
+body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  overflow: hidden;
+  line-height: 1;
+  background: #f0f2f5;
+  line-height: 20px;
+}
+
+@font-face {
+  font-family: 'pingfang-thin';
+  src: url(../assets/fonts/pingfang-thin.ttf) format('truetype');
+}
+
+ul,li{
+  list-style: none;
+}
+*{
+  margin: 0;
+  padding: 0;
+}
+/* LED样式字体 */
+@font-face {
+  font-family: 'led';
+  src: url(../assets/fonts/UUSUNElektron.ttf) format('truetype');
+}
+
+.bjs-powered-by {
+  display: none;
+}
+
+// 覆盖浏览器默认行为
+canvas:focus {
+  outline: none;
+}
+
+.mb8 {
+  margin-bottom: 8px;
+}
+
+.mb16 {
+  margin-bottom: 16px;
+}
+
+.ml8 {
+  margin-left: 8px;
+}
+
+.ml16 {
+  margin-left: 16px;
+}
+
+.mr8 {
+  margin-right: 8px;
+}
+
+.mr16 {
+  margin-right: 16px;
+}
+
+.pl8 {
+  padding-left: 8px;
+}
+
+.pl16 {
+  padding-left: 16px;
+}
+
+.cp {
+  cursor: pointer;
+}
+
+.sr-title {
+  position: relative;
+  font-size: 28px;
+  padding-left: 16px;
+  line-height: 1;
+  margin-bottom: 30px;
+  margin-top: 30px;
+  max-width: 80%;
+  &:first-child, &:nth-child(2) {
+    margin-top: 0;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 1px;
+    height: 28px;
+    width: 5px;
+    background-image: linear-gradient(0deg, #2d8cf0 0%, #06d0d8 100%);
+  }
+}
+.sr-sub-title{
+ max-width: 20%;
+ color: #888;
+ display: flex;
+ justify-content: flex-end;
+ flex-direction: column;
+ position: absolute;
+ right: 20px;
+ top: 10px;
+ div{
+   display: flex;
+   justify-content: flex-end;
+ }
+}
+.ivu-modal-body {
+  .ivu-modal-confirm-head-icon {
+    top: -3px;
+    i {
+      font-size: 21px;
+    }
+  }
+}
+.ivu-modal-content {
+  border-radius: unset;
+  .ivu-btn {
+    border-radius: 2px;
+  }
+  .ivu-btn-text {
+    border: 1px solid #dcdee2;
+  }
+}
+.table-content h3{
+  margin: 10px 0;
+}

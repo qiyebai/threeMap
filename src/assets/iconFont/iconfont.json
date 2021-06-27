@@ -1,0 +1,506 @@
+{
+  "id": "2190913",
+  "name": "molingUI",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "18060256",
+      "name": "锁定",
+      "font_class": "lock",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "18060257",
+      "name": "过期",
+      "font_class": "overdue",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "18060288",
+      "name": "编辑",
+      "font_class": "edit",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "18071067",
+      "name": "备注",
+      "font_class": "remarks",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "18071068",
+      "name": "编辑",
+      "font_class": "edit-pen",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "18071069",
+      "name": "单位处置",
+      "font_class": "deal",
+      "unicode": "e647",
+      "unicode_decimal": 58951
+    },
+    {
+      "icon_id": "18071070",
+      "name": "抄送",
+      "font_class": "send",
+      "unicode": "e648",
+      "unicode_decimal": 58952
+    },
+    {
+      "icon_id": "18071071",
+      "name": "催办",
+      "font_class": "urging",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "18071072",
+      "name": "发起",
+      "font_class": "launch",
+      "unicode": "e64a",
+      "unicode_decimal": 58954
+    },
+    {
+      "icon_id": "18071073",
+      "name": "点评",
+      "font_class": "comment",
+      "unicode": "e64b",
+      "unicode_decimal": 58955
+    },
+    {
+      "icon_id": "18071074",
+      "name": "二级监管处置",
+      "font_class": "protect",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "18071075",
+      "name": "完成",
+      "font_class": "complete",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "18071076",
+      "name": "审核",
+      "font_class": "verify",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "18071077",
+      "name": "全部",
+      "font_class": "all",
+      "unicode": "e64f",
+      "unicode_decimal": 58959
+    },
+    {
+      "icon_id": "18071078",
+      "name": "复核",
+      "font_class": "review",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "18071079",
+      "name": "推送",
+      "font_class": "push",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "18071080",
+      "name": "指派",
+      "font_class": "assign",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "18071081",
+      "name": "删除",
+      "font_class": "delete",
+      "unicode": "e653",
+      "unicode_decimal": 58963
+    },
+    {
+      "icon_id": "18071082",
+      "name": "增加复核",
+      "font_class": "check",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "17985133",
+      "name": "收起",
+      "font_class": "packup",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "17985134",
+      "name": "首页",
+      "font_class": "home",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "17985135",
+      "name": "服务报告",
+      "font_class": "report",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "17985136",
+      "name": "安全评估",
+      "font_class": "safe",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "17985137",
+      "name": "数据库账号",
+      "font_class": "person",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "17985138",
+      "name": "搜索",
+      "font_class": "search",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "17985139",
+      "name": "展开",
+      "font_class": "open",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "17985140",
+      "name": "数据安全分类分级系统",
+      "font_class": "classification",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "17985141",
+      "name": "系统管理",
+      "font_class": "manage",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "17985142",
+      "name": "消息",
+      "font_class": "message",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "17986034",
+      "name": "排序上",
+      "font_class": "sortup",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "17986035",
+      "name": "up",
+      "font_class": "up",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "17986036",
+      "name": "下拉",
+      "font_class": "arrow-down",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "17986037",
+      "name": "常态箭头",
+      "font_class": "arrow-right",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "17986038",
+      "name": "展开箭头",
+      "font_class": "arrow-more",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "17986039",
+      "name": "down",
+      "font_class": "down",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "17986040",
+      "name": "排序下",
+      "font_class": "sortdown",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "17986041",
+      "name": "right",
+      "font_class": "right",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "17986042",
+      "name": "跳转",
+      "font_class": "jump",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "17986056",
+      "name": "保存-无边框",
+      "font_class": "save",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "17986057",
+      "name": "保存-下载",
+      "font_class": "download",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "17986058",
+      "name": "更多",
+      "font_class": "more",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "17986059",
+      "name": "导出",
+      "font_class": "export",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "17986060",
+      "name": "框架-返回",
+      "font_class": "back",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "17986061",
+      "name": "卡片",
+      "font_class": "card",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "17986062",
+      "name": "框架-关闭",
+      "font_class": "close",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "17986063",
+      "name": "列表",
+      "font_class": "list",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "17986064",
+      "name": "删除",
+      "font_class": "trash",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "17986065",
+      "name": "清除",
+      "font_class": "clear",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "17986066",
+      "name": "日历",
+      "font_class": "date",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "17986067",
+      "name": "设置列-无边框",
+      "font_class": "system",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "17986068",
+      "name": "上传",
+      "font_class": "upload",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "17986069",
+      "name": "上传图片",
+      "font_class": "upload-cloud",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "17986070",
+      "name": "搜索",
+      "font_class": "search-big",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "17986071",
+      "name": "时间",
+      "font_class": "time",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "17986072",
+      "name": "添加",
+      "font_class": "add",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "17986075",
+      "name": "刷新-无边框",
+      "font_class": "refresh",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "17986076",
+      "name": "下载",
+      "font_class": "download-small",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "17986121",
+      "name": "成功",
+      "font_class": "success",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "17986122",
+      "name": "清除",
+      "font_class": "clear-all",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "17986123",
+      "name": "警示16",
+      "font_class": "warning",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "17986124",
+      "name": "失败",
+      "font_class": "fail",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "17986125",
+      "name": "解释说明",
+      "font_class": "explain",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "17986126",
+      "name": "未通过",
+      "font_class": "part",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "17986130",
+      "name": "使用方法",
+      "font_class": "question",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "17986371",
+      "name": "样例",
+      "font_class": "examples",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "17986611",
+      "name": "敏感表",
+      "font_class": "sensitive",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "17986612",
+      "name": "数据列",
+      "font_class": "column",
+      "unicode": "e634",
+      "unicode_decimal": 58932
+    },
+    {
+      "icon_id": "17986613",
+      "name": "敏感列",
+      "font_class": "sensitive-column",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "17986614",
+      "name": "新增列",
+      "font_class": "add-column",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "17986615",
+      "name": "新增表",
+      "font_class": "add-table",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "17986686",
+      "name": "数据表",
+      "font_class": "table",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    }
+  ]
+}
