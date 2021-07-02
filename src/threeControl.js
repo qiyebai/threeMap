@@ -4,7 +4,8 @@ import { CSS2DRenderer } from 'three/examples/jsm/renderers/CSS2DRenderer';
 import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
 import { CSS3DRenderer, CSS3DSprite, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-// import { FileLoader } from 'three/examples/jsm/loaders/FileLoader.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 
 export {
   Clock,
@@ -15,5 +16,7 @@ export {
   CSS3DSprite,
   CSS3DObject,
   OBJLoader,
+  EffectComposer,
+  RenderPass,
 };
 

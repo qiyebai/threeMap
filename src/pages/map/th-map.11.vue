@@ -8,7 +8,8 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import axios from 'axios';
-import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer } from '../../threeControl';
+import { OutlinePass } from 'three-outlinepass';
+import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer, RenderPass, EffectComposer } from '../../threeControl';
 
 export default {
   data() {
@@ -40,13 +41,14 @@ export default {
       data_glowTexture: false,
       data_flyGroup: false,
       data_flyGeoGroup: false,
+      compose: false,
       data_flyIndex: 0,
       data_rainDrops: 1000,
     };
   },
   mounted() {
     this.init();
-    this.getData();
+    // this.getData();
   },
   methods: {
     getData() {
@@ -64,42 +66,98 @@ export default {
       this.width = 1200;
       this.sceneInit();// 场景
       this.cameraInit();// 相机
-      this.renderInit();// 渲染器
-      this.planeInit();// 平面
-      this.lightInit(); // 光源
-      this.alarmInit(); // 告警
-      this.beamInit();// 光柱
-      this.flyInit();// 飞线
-      this.rainInit(); // 下雨场景
-      this.renderer.clear();
-      this.renderRun(); // 渲染过程
+      this.renderInit();
+      let scene; let camera; let renderer; let light; let controls; let compose; let
+        renderPass;
+      let outlinePass;
+      const selectedObjects = [];
+      const _this = this;
+
+      function iniScene() {
+        _this.compose = new EffectComposer(_this.renderer);
+        renderPass = new RenderPass(_this.scene, _this.camera);
+
+        outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), _this.scene, _this.camera);
+        outlinePass.renderToScreen = true;
+        outlinePass.selectedObjects = selectedObjects;
+
+        _this.compose.addPass(renderPass);
+        _this.compose.addPass(outlinePass);
+
+        const params = {
+          edgeStrength: 3.0,
+          edgeGlow: 1,
+          edgeThickness: 1.0,
+          pulsePeriod: 0,
+          usePatternTexture: false,
+        };
+        outlinePass.edgeStrength = params.edgeStrength;
+        outlinePass.edgeGlow = params.edgeGlow;
+        outlinePass.visibleEdgeColor.set('red');
+        outlinePass.hiddenEdgeColor.set('yellow');
+
+        // scene.add(new THREE.AxesHelper(4));
+      }
+      function cubeDr(a, x, y, z) {
+        const cubeGeo = new THREE.BoxGeometry(a, a, a);
+        const cubeMat = new THREE.MeshPhongMaterial({
+          color: 0xfff000 * Math.random(),
+        });
+        const cube = new THREE.Mesh(cubeGeo, cubeMat);
+        cube.position.set(x, y, z);
+        cube.castShadow = true;
+        _this.scene.add(cube);
+        return cube;
+      }
+
+
+      function render() {
+        requestAnimationFrame(render);
+        _this.renderer.render(_this.scene, _this.camera);
+        _this.compose.render();
+      }
+
+      function drawScene() {
+        iniScene();
+        // iniLight();
+        selectedObjects.push(cubeDr(4, 0, 2, 0));
+        selectedObjects.push(cubeDr(4, 5, 2, 0));
+        selectedObjects.push(cubeDr(4, -4, 2, 0));
+        cubeDr(4, 0, 6, 0);
+        _this.renderRun();
+        // render();
+      }
+      drawScene();
+      // this.renderRun();
     },
     sceneInit() { // 场景
       this.scene = new THREE.Scene();
       this.scene2 = new THREE.Scene();
     },
     cameraInit() { // 相机
-      this.camera = new THREE.PerspectiveCamera(75, 2 / 1, 1, 1000000000);
+      this.camera = new THREE.PerspectiveCamera(75, 2 / 1, 10, 1000000000);
       // 设置相机位置在中心点
-      this.camera.position.z = 100;
-      this.camera.position.y = 100;
+      this.camera.position.set(-10, 10, 30);
+      this.camera.lookAt(this.scene.position);
     },
     renderInit() { // 渲染器
+      // this.renderer = new THREE.WebGLRenderer({ alpha: true });
+      // this.renderer.setSize(window.innerWidth, window.innerHeight);
+      // const dom = document.createElement('div');
+      // // dom.style.backgroundColor = 'cadetblue';
+      // document.body.appendChild(dom);
+      // dom.appendChild(this.renderer.domElement);
       const container = document.getElementById('container');
       this.renderer = new THREE.WebGLRenderer({
         antialias: true, // 锯齿感
+        alpha: true,
         side: THREE.DoubleSide,
-        skinning: true,
       });
       this.renderer.setSize(this.width, this.height);
-      this.renderer.setClearColor('#fff');
-      this.cssRenderer = new CSS3DRenderer();
-      this.cssRenderer.setSize(this.width, this.height);
+      // this.renderer.setClearColor('#fff');
+      this.renderer.shadowMap.enabled = true;
       container.appendChild(this.renderer.domElement);
-      container.appendChild(this.cssRenderer.domElement);
-      this.cssRenderer.domElement.style.position = 'absolute';
-      this.cssRenderer.domElement.style.top = 0;
-      this.control = new OrbitControls(this.camera, this.cssRenderer.domElement);
+      this.control = new OrbitControls(this.camera, this.renderer.domElement);
     },
     buildInit() { // 建筑物初始化
       const textureLoader = new THREE.TextureLoader();
@@ -316,46 +374,65 @@ export default {
       this.scene.add(light1);
     },
     render3D() {
+      this.data_3dObject = [];
       this.data_object.traverse((child) => {
         child.children.forEach((item) => {
-          if (item.isMesh) item.material.map = this.data_texture;
+          if (item.isMesh) {
+            // item.material.map = this.data_texture;
+            this.data_3dObject.push(item);
+          }
         });
       });
-      this.scene.add(this.data_object);
+      this.data_object.scale.x = 30;
+      this.data_object.scale.y = 30;
+      this.data_object.scale.z = 30;
+      // this.scene.add(this.data_object);
+      this.effect();
+    },
+    effect() {
+      this.composer = new EffectComposer(this.renderer);
+      const renderPass = new RenderPass(this.scene, this.camera);
+
+
+      const outlinePass = new OutlinePass(new THREE.Vector2(this.width, this.height), this.scene, this.camera);
+
+
+      outlinePass.pulsePeriod = 2; // 数值越大，律动越慢
+      outlinePass.visibleEdgeColor.set(0xff0000); // 高光颜色
+      outlinePass.hiddenEdgeColor.set(0x000000);// 阴影颜色
+      outlinePass.usePatternTexture = false; // 使用纹理覆盖？
+      outlinePass.edgeStrength = 5; // 高光边缘强度
+      outlinePass.edgeGlow = 1; // 边缘微光强度
+      outlinePass.edgeThickness = 1; // 高光厚度
+
+      // console.log(this.data_3dObject);
+      const cubeDr = (a, x, y, z) => {
+        const cubeGeo = new THREE.BoxGeometry(a, a, a);
+        const cubeMat = new THREE.MeshPhongMaterial({
+          color: 0xfff000 * Math.random(),
+        });
+        const cube = new THREE.Mesh(cubeGeo, cubeMat);
+        cube.position.set(x, y, z);
+        cube.castShadow = true;
+        this.scene.add(cube);
+        return cube;
+      };
+      const selectedObjects = [];
+      selectedObjects.push(cubeDr(4, 0, 2, 0));
+      selectedObjects.push(cubeDr(4, 5, 2, 0));
+      selectedObjects.push(cubeDr(4, -4, 2, 0));
+      cubeDr(4, 0, 6, 0);
+      outlinePass.selectedObjects = selectedObjects; // 需要高光的obj
+      this.composer.addPass(renderPass); // 特效渲染
+      this.composer.addPass(outlinePass); // 加入高光特效
+      // this.composer.render();
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
-      this.control.update();
-      // 飞线
-      if (this.data_glowTexture) {
-        this.data_glowTexture.offset.x -= 0.06;
-      }
-      /// 物体移动
-      if (this.data_flyGeoGroup) {
-        this.data_flyGeoGroup.children.forEach((item, index) => {
-          const { x, y, z } = this.data_flyGroup[index][this.data_flyIndex];
-          item.position.x = x;
-          item.position.y = y;
-          item.position.z = z;
-        });
-      }
-      this.data_flyIndex++;
-      if (this.data_flyIndex > 50) {
-        this.data_flyIndex = 0;
-      }
-      // 雨滴动画
-      const positions = this.geom.attributes.position.array;
-      for (let i = 0; i < this.data_rainDrops * 3; i += 3) { // 改变Y坐标，加速运动
-        this.data_rainSpeed[i / 3] += Math.random() * 0.05;
-        positions[i + 1] -= this.data_rainSpeed[i / 3];
-        if (positions[i + 1] < -20) {
-          positions[i + 1] = 80;
-          this.data_rainSpeed[i / 3] = 0.5 + Math.random() / 2;
-        }
-      }
-      this.geom.attributes.position.needsUpdate = true;
+
+
       this.renderer.render(this.scene, this.camera);
-      this.cssRenderer.render(this.scene2, this.camera);
+      if (this.compose) this.compose.render();
     },
     getMercator(positonArry) { // [114.32894, 30.585748]经纬度转墨卡托坐标
       const mercator = {};

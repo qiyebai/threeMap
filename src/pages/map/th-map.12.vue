@@ -8,7 +8,8 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import axios from 'axios';
-import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer } from '../../threeControl';
+import { OutlinePass } from 'three-outlinepass';
+import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer, RenderPass, EffectComposer } from '../../threeControl';
 
 export default {
   data() {
@@ -16,6 +17,7 @@ export default {
       data_object: {},
       data_buildInfos: {},
       data_roadInfos: {},
+      selectedObjects: [],
       data_center: [
         120.02138188499998,
         30.378369387299983,
@@ -40,6 +42,7 @@ export default {
       data_glowTexture: false,
       data_flyGroup: false,
       data_flyGeoGroup: false,
+      compose: false,
       data_flyIndex: 0,
       data_rainDrops: 1000,
     };
@@ -71,7 +74,11 @@ export default {
       this.beamInit();// 光柱
       this.flyInit();// 飞线
       this.rainInit(); // 下雨场景
+      // this.geometryInit();
+      this.effect();
       this.renderer.clear();
+      // console.log(this.data_3dObject);
+
       this.renderRun(); // 渲染过程
     },
     sceneInit() { // 场景
@@ -79,7 +86,7 @@ export default {
       this.scene2 = new THREE.Scene();
     },
     cameraInit() { // 相机
-      this.camera = new THREE.PerspectiveCamera(75, 2 / 1, 1, 1000000000);
+      this.camera = new THREE.PerspectiveCamera(75, 2 / 1, 0.1, 3000);
       // 设置相机位置在中心点
       this.camera.position.z = 100;
       this.camera.position.y = 100;
@@ -89,10 +96,10 @@ export default {
       this.renderer = new THREE.WebGLRenderer({
         antialias: true, // 锯齿感
         side: THREE.DoubleSide,
-        skinning: true,
       });
       this.renderer.setSize(this.width, this.height);
       this.renderer.setClearColor('#fff');
+      this.renderer.shadowMap.enabled = true;
       this.cssRenderer = new CSS3DRenderer();
       this.cssRenderer.setSize(this.width, this.height);
       container.appendChild(this.renderer.domElement);
@@ -316,12 +323,57 @@ export default {
       this.scene.add(light1);
     },
     render3D() {
+      this.data_3dObject = [];
       this.data_object.traverse((child) => {
         child.children.forEach((item) => {
-          if (item.isMesh) item.material.map = this.data_texture;
+          if (item.isMesh) {
+            // item.material.map = this.data_texture;
+            this.data_3dObject.push(item);
+          }
         });
       });
-      this.scene.add(this.data_object);
+      this.data_object.scale.x = 30;
+      this.data_object.scale.y = 30;
+      this.data_object.scale.z = 30;
+      // this.scene.add(this.data_object);
+    },
+    effect() {
+      this.compose = new EffectComposer(this.renderer);
+      const renderPass = new RenderPass(this.scene, this.camera);
+
+      const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
+      outlinePass.renderToScreen = true;
+      const cubeDr = (a, x, y, z) => {
+        const cubeGeo = new THREE.BoxGeometry(a, a, a);
+        const cubeMat = new THREE.MeshPhongMaterial({
+          color: 0xfff000 * Math.random(),
+        });
+        const cube = new THREE.Mesh(cubeGeo, cubeMat);
+        cube.position.set(x, y, z);
+        cube.castShadow = true;
+        this.scene.add(cube);
+        return cube;
+      };
+      this.selectedObjects.push(cubeDr(4, 0, 2, 0));
+      this.selectedObjects.push(cubeDr(4, 5, 2, 0));
+      this.selectedObjects.push(cubeDr(4, -4, 2, 0));
+      cubeDr(4, 0, 6, 0);
+      outlinePass.selectedObjects = this.selectedObjects;
+
+      this.compose.addPass(renderPass);
+      this.compose.addPass(outlinePass);
+
+      const params = {
+        edgeStrength: 3.0,
+        edgeGlow: 1,
+        edgeThickness: 1.0,
+        pulsePeriod: 0,
+        usePatternTexture: false,
+      };
+      outlinePass.edgeStrength = params.edgeStrength;
+      outlinePass.edgeGlow = params.edgeGlow;
+      outlinePass.visibleEdgeColor.set('red');
+      outlinePass.hiddenEdgeColor.set('yellow');
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
@@ -356,6 +408,9 @@ export default {
       this.geom.attributes.position.needsUpdate = true;
       this.renderer.render(this.scene, this.camera);
       this.cssRenderer.render(this.scene2, this.camera);
+      if (this.composer) {
+        this.composer.render();
+      }
     },
     getMercator(positonArry) { // [114.32894, 30.585748]经纬度转墨卡托坐标
       const mercator = {};

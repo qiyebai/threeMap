@@ -8,7 +8,8 @@
 import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import axios from 'axios';
-import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer } from '../../threeControl';
+import { OutlinePass } from 'three-outlinepass';
+import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer, RenderPass, EffectComposer } from '../../threeControl';
 
 export default {
   data() {
@@ -70,6 +71,7 @@ export default {
       this.alarmInit(); // 告警
       this.beamInit();// 光柱
       this.flyInit();// 飞线
+      this.geometryInit();
       this.rainInit(); // 下雨场景
       this.renderer.clear();
       this.renderRun(); // 渲染过程
@@ -92,7 +94,7 @@ export default {
         skinning: true,
       });
       this.renderer.setSize(this.width, this.height);
-      this.renderer.setClearColor('#fff');
+      // this.renderer.setClearColor('#fff');
       this.cssRenderer = new CSS3DRenderer();
       this.cssRenderer.setSize(this.width, this.height);
       container.appendChild(this.renderer.domElement);
@@ -316,12 +318,44 @@ export default {
       this.scene.add(light1);
     },
     render3D() {
+      const selectedObjects = [];
       this.data_object.traverse((child) => {
         child.children.forEach((item) => {
-          if (item.isMesh) item.material.map = this.data_texture;
+          if (item.isMesh) {
+            item.material.map = this.data_texture;
+            selectedObjects.push(item);
+          }
         });
       });
+      this.effect(selectedObjects);
+      this.data_object.scale.x = 10;
+      this.data_object.scale.y = 10;
+      this.data_object.scale.z = 10;
       this.scene.add(this.data_object);
+    },
+    effect(selectedObjects) {
+      this.compose = new EffectComposer(this.renderer);
+      const renderPass = new RenderPass(this.scene, this.camera);
+
+      const outlinePass = new OutlinePass(new THREE.Vector2(window.innerWidth, window.innerHeight), this.scene, this.camera);
+      outlinePass.renderToScreen = true;
+
+      outlinePass.selectedObjects = selectedObjects;
+
+      this.compose.addPass(renderPass);
+      this.compose.addPass(outlinePass);
+
+      const params = {
+        edgeStrength: 3.0,
+        edgeGlow: 1,
+        edgeThickness: 1.0,
+        pulsePeriod: 0,
+        usePatternTexture: false,
+      };
+      outlinePass.edgeStrength = params.edgeStrength;
+      outlinePass.edgeGlow = params.edgeGlow;
+      // outlinePass.visibleEdgeColor.set('red');
+      outlinePass.hiddenEdgeColor.set('yellow');
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
@@ -356,6 +390,7 @@ export default {
       this.geom.attributes.position.needsUpdate = true;
       this.renderer.render(this.scene, this.camera);
       this.cssRenderer.render(this.scene2, this.camera);
+      if (this.compose) this.compose.render();
     },
     getMercator(positonArry) { // [114.32894, 30.585748]经纬度转墨卡托坐标
       const mercator = {};
