@@ -62,7 +62,8 @@ export default {
       const earthMaterial = new THREE.MeshPhongMaterial({
         specular: 0x333333,
         shininess: 5,
-        map: textureLoader.load('textures/planets/earth_atmos_2048.jpg'),
+        map: textureLoader.load('textures/planets/2049.png'),
+        transparent: true,
       });
       const earth = new THREE.Mesh(earthGeometry, earthMaterial);
       this.scene.add(earth);

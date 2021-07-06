@@ -9,6 +9,7 @@ import * as THREE from 'three';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import axios from 'axios';
 import { OutlinePass } from 'three-outlinepass';
+import Stats from 'stats-js';
 import { OrbitControls, CSS3DSprite, CSS3DObject, CSS3DRenderer, RenderPass, EffectComposer } from '../../threeControl';
 
 export default {
@@ -61,6 +62,9 @@ export default {
       });
     },
     init() {
+      this.stats = new Stats();
+      this.stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+      document.body.appendChild(this.stats.dom);
       this.height = 600;
       this.width = 1200;
       this.sceneInit();// 场景
@@ -359,6 +363,8 @@ export default {
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
+      this.stats.begin();
+      this.stats.end();
       this.control.update();
       // 飞线
       if (this.data_glowTexture) {
