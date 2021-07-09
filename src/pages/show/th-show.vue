@@ -21,7 +21,6 @@ export default {
       this.renderInit();// 渲染器
       this.planeInit();
       this.lightInit(); // 光源
-      this.tentaclesInit();
       this.renderer.clear();
       this.renderRun(); // 渲染过程
     },
@@ -59,35 +58,7 @@ export default {
       this.scene.add(axesHelper);
     },
     tentaclesInit() {
-      const geometry = new THREE.PlaneBufferGeometry(20, 20);
 
-      const uniforms = {
-        u_resolution: { type: 'v2', value: new THREE.Vector2(this.width, this.height) },
-      };
-      const vertexShader = `
-        void main() {
-          gl_Position = vec4( position, 1.0 );
-        }
-        `;
-      const fragmentShader = `
-        uniform vec2 u_resolution;
-        void main() {
-          vec2 st = gl_FragCoord.xy/u_resolution.xy;
-          gl_FragColor=vec4(st.x,st.y,0.0,1.0);
-        }
-      `;
-      const material = new THREE.ShaderMaterial({
-        uniforms,
-        vertexShader,
-        fragmentShader,
-      });
-      const material1 = new THREE.MeshPhongMaterial({
-        color: 'red',
-        side: THREE.DoubleSide,
-      });
-
-      const mesh = new THREE.Mesh(geometry, material);
-      this.scene.add(mesh);
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
