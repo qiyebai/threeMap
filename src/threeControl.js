@@ -6,6 +6,9 @@ import { CSS3DRenderer, CSS3DSprite, CSS3DObject } from 'three/examples/jsm/rend
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
+
 
 export {
   Clock,
@@ -18,5 +21,7 @@ export {
   OBJLoader,
   EffectComposer,
   RenderPass,
+  GLTFLoader,
+  DRACOLoader,
 };
 

@@ -6,7 +6,7 @@
 
 <script>
 import * as THREE from 'three';
-import { OrbitControls } from '../../threeControl';
+import { OrbitControls, GLTFLoader, DRACOLoader } from '../../threeControl';
 
 export default {
   mounted() {
@@ -21,6 +21,7 @@ export default {
       this.renderInit();// 渲染器
       this.planeInit();
       this.lightInit(); // 光源
+      this.geoInit();
       this.renderer.clear();
       this.renderRun(); // 渲染过程
     },
@@ -33,7 +34,7 @@ export default {
       this.camera.position.y = 300;
     },
     lightInit() {
-      const light1 = new THREE.AmbientLight(0xffffff);
+      const light1 = new THREE.AmbientLight(0xffffff, 1);
       this.scene.add(light1);
     },
     renderInit() { // 渲染器
@@ -57,8 +58,17 @@ export default {
       this.scene.add(grid);
       this.scene.add(axesHelper);
     },
-    tentaclesInit() {
-
+    geoInit() {
+      const loader = new GLTFLoader();
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath('./images/cars/car2/textures/');
+      loader.setDRACOLoader(dracoLoader);
+      loader.load('./images/cars/car2/scene.gltf', (gltf) => {
+        this.scene.add(gltf.scene);
+        // const mesh = gltf.scene.children[0];
+        // const s = 0.6;
+        // mesh.scale.set(s, s, s);
+      });
     },
     renderRun() { // 渲染过程
       requestAnimationFrame(this.renderRun);
